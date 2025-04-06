@@ -1,0 +1,20 @@
+1. To jest testowy plik txt
+2. Dzieki niemu moge sprawdzic jak dziala modul
+3. Uzywam go do zadania z jezykow skryptowych
+4. Linia numer 4
+5. Linia numer 5
+6. Linia numer 6
+7. Linia numer 7
+8. Linia numer 8
+9. Linia numer 9
+10. Linia numer 10
+11. Linia numer 11
+12. Linia numer 12
+13. Linia numer 13
+14. Linia numer 14
+15. Linia numer 15
+16. Linia numer 16
+17. Linia numer 17
+18. Linia numer 18
+19. Linia numer 19
+20. To powinno sie wyswietlic przy uruchomieniu tail.py
