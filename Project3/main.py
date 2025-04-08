@@ -1,95 +1,66 @@
 import sys
-from datetime import datetime, UTC
+from reader import read_log
 import sorting
-import entries #zmien nazwe na filter
+from filters import (
+    get_entries_by_addr, get_entries_by_code, get_failed_reads, get_entries_by_extension)
+from dictionaries import (entry_to_dict, log_to_dict, print_dict_entry_dates)
 
 def main():
+    # 2a
     logs = read_log()
-    #print_logs_formatted(logs)
+    print_logs_formatted(logs)
 
-    # matches_ip = entries.get_entries_by_addr(logs, "192.168.202.79")
-    # print_logs_formatted(matches_ip)
-
-    #dla status code czyli 9 nie dziala
-    # sorted_logs = sorting.sort_log(logs, 8)
+    # 2b
+    # sorted_logs = sorting.sort_log(logs, 11)
     # print_logs_formatted(sorted_logs)
 
-    # problem jest tqki ze nazwa domenowa hosta to ip??
-    # matches_host = entries.get_entries_by_addr(logs, "192.168.229.251")
-    # print_logs_formatted(matches_host)
+    #2c problem jest tqki ze nazwa domenowa hosta to ip??
+    # matches_ip = get_entries_by_addr(logs, "192.168.204.45")
+    # matches_ip = get_entries_by_addr(logs, "www.wikipedia.org")
+    # print_logs_formatted(matches_ip)
 
-    # matches_status = entries.get_entries_by_code(logs, 401)
+    # 2d
+    # matches_status = get_entries_by_code(logs, 401)
     # print_logs_formatted(matches_status)
 
-    # nie dziala
-    # failed_status = entries.get_failed_reads(logs)
-    # print_logs_formatted(failed_status)
+    # 2e
+    # failed_status = get_failed_reads(logs)
+    # print_logs_formatted(failed_status[0])
+    # print_logs_formatted(failed_status[1])
     
-    #lub combine=True
-    # failed_status2 = entries.get_failed_reads(logs, True)
+    # or combine = True then it connects both 4xx and 5xx list (4xx elements first)
+    # failed_status2 = get_failed_reads(logs, True)
     # print_logs_formatted(failed_status2)
 
-    # extenstions = entries.get_entries_by_extension(logs, "csv")
+    # 2f
+    # extenstions = get_entries_by_extension(logs, "csv")
     # print_logs_formatted(extenstions)
 
+    # 3a
+    # entry_as_dict = entry_to_dict(logs[1])
+    # print(entry_as_dict)
+
+    # 3b
+    # log_as_dict = log_to_dict(logs)
+    # print(log_as_dict)
+
+    # 3c  
+    # log_as_dict = log_to_dict(logs)
+    # print_dict_entry_dates(log_as_dict)
+
+
+
+
+
+
     
-    
 
-
-def read_log() -> list:
-    """function that reads logs fron standard input and returns array of logs divided into tuples"""
-    entries = []
-
-    for line in sys.stdin:
-        line = line.strip()
-        if not line:
-            continue  # pomiń puste linie
-
-        fields = line.split('\t')
-        #if len(fields) < 27:
-            #continue  # pomiń linie niekompletne
-
-        try:
-            # Parsowanie odpowiednich pól
-            timestamp_float = float(fields[0])
-            timestamp = datetime.fromtimestamp(timestamp_float, tz=UTC)
-            uid = fields[1]
-            orig_h = fields[2]
-            orig_p = int(fields[3])
-            resp_h = fields[4]
-            resp_p = int(fields[5])
-            method = fields[7]
-            host = fields[8]
-            uri = fields[9]
-            status_code = int(float(fields[14]))
-
-            # Krotka z istotnymi danymi
-            entry = (
-                timestamp,       # datetime.datetime
-                uid,             # str
-                orig_h,         # str
-                orig_p,       # int
-                resp_h,         # str
-                resp_p,       # int
-                method,  
-                host,        # str
-                uri,             # str
-                status_code
-            )
-            # if internal_id == 0:
-            #     print(entry)
-            entries.append(entry) 
-        except Exception as e:
-            entries.append(f"Error with reading log")
-
-    return entries
 
 
 def print_logs_formatted(entries: list):
-    i = -1
+    # i = 0
     for entry in entries:
-        i += 1
-        if i < 10:
+        # if i < 150: 
             try:
                 (
                     timestamp,
@@ -105,7 +76,6 @@ def print_logs_formatted(entries: list):
                 ) = entry
                 
                 print(f"""
-    ======   Log Entry   ======
     Timestamp      : {timestamp}
     UID            : {uid}
     Origin IP/Port : {orig_h} : {orig_p}
@@ -116,9 +86,9 @@ def print_logs_formatted(entries: list):
     Status code    : {status_code}
     ------------------------
     """)
-                
+                # i += 1
             except ValueError:
-                print(" Invalid log entry format, skipping\n")
+                print('error with printing format')
 
 
 main()

@@ -2,9 +2,9 @@ import collections
 
 def aggregate_statistics(results):
     """
-    Agreguje statystyki z listy wyników (słowników) uzyskanych z analizy plików.
+    Agreguje statystyki z listy wyników uzyskanych z analizy poszczególnych plików.
     Zwraca słownik zawierający:
-      - total_files: liczbę przetworzonych plików,
+      - total_files: liczba przetworzonych plików,
       - total_characters: sumaryczną liczbę znaków,
       - total_words: sumaryczną liczbę słów,
       - total_lines: sumaryczną liczbę wierszy,
@@ -19,9 +19,11 @@ def aggregate_statistics(results):
     overall_char_counter = collections.Counter()
     overall_word_counter = collections.Counter()
     for item in results:
-        overall_char_counter.update(item.get("char_counts", {}))
-        overall_word_counter.update(item.get("word_counts", {}))
-    
+        # W tym uproszczonym przykładzie agregujemy wyniki poprzez zliczenie, który
+        # z najczęstszych znaków/słów pojawia się najczęściej w analizach poszczególnych plików.
+        overall_char_counter[item["most_frequent_character"]] += 1
+        overall_word_counter[item["most_frequent_word"]] += 1
+
     most_common_char, _ = overall_char_counter.most_common(1)[0] if overall_char_counter else (None, 0)
     most_common_word, _ = overall_word_counter.most_common(1)[0] if overall_word_counter else (None, 0)
     
@@ -36,4 +38,4 @@ def aggregate_statistics(results):
     return aggregate_result
 
 if __name__ == "__main__":
-    print("aggregator")
+    print()

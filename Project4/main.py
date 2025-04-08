@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import json
@@ -13,8 +14,10 @@ def main():
         sys.exit(f"{directory} nie jest katalogiem.")
     
     results = []
-    # Iterujemy przez wszystkie pliki w podanym katalogu.
+    # Przetwarzamy tylko pliki z rozszerzeniem .txt (plik tekstowy)
     for filename in os.listdir(directory):
+        if not filename.lower().endswith('.txt'):
+            continue
         file_path = os.path.join(directory, filename)
         if os.path.isfile(file_path):
             try:

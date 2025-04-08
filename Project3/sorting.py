@@ -1,33 +1,30 @@
 from reader import read_log
 
-# Zaimplementuj mechanizm sortowania listy korzystając z funkcji sorted() lub sort().
-# index – liczba określająca element krotki, według którego zostanie wykonane sortowanie.
 def sort_log(log: list, index: int) -> list:
     try:
+        # log is empty
         if not log:
             return []
 
-        # Sprawdzenie poprawności indeksu względem długości krotek
-        # if not all(isinstance(entry, tuple) for entry in log):
-        #     raise ValueError("Wszystkie wpisy w logu muszą być krotkami.")
-        # if index < 0 or index >= len(log[0]):
-        #     raise IndexError(f"Index {index} wykracza poza rozmiar krotek.")
-        # Sortowanie listy według danego indeksu
+        # valid index value
+        if index < 0 or index >= len(log[0]):
+            raise IndexError(f"Index {index} is out of bound (max: {len(log[0]) - 1}).")
+
+        # creates new sorted list, key specify what to sort by
+        # anonymous func to sort each entry by entry[index] element position inside tuple
         return sorted(log, key=lambda entry: entry[index])
 
-    except IndexError as e:
-        print(f"tak indeksu: {e}")
     except ValueError as e:
-        print(f"Błąd wartości: {e}")
+        print(f"Input value error: {e}")
     except Exception as e:
-        print(f"Nieoczekiwany błąd: {e}")
+        print(f"Unexpected exception: {e}")
 
     return []
 
 
 
 
-
-
 if __name__ == "__main__":
-    print("sorted.py")
+    log = read_log()
+    sorted_log = sort_log(log, 1)
+    print(sorted_log)

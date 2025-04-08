@@ -6,7 +6,7 @@ wyjściu standardowym. Warunkiem wyświetlania zmiennej i jej wartości jest
 istnienie parametru, którego wartość zawiera się w nazwie zmiennej.
     b. Zmienne powinny być wyświetlone w porządku alfabetycznym.
 
-Przykładowe uruchomienie: ``` python env_var.py ``` or ``` python python env_var.oy HOME ``` or ``` python python env_var.oy HOME PATH ```
+Przykładowe uruchomienie: ``` python scripts/env_var.py ``` or ``` python scripts/env_var.py HOME ``` or ``` python scripts/env_var.py HOME PATH ```
 
 2. Napisz skrypt, który operuje na zmiennej środowiskowej PATH. Zmienna ta
 wykorzystywana jest w różnych systemach operacyjnych, m.in. Windows, Linux, Mac OS
@@ -23,9 +23,9 @@ znajdujących się w tym katalogu.
 Przykładowe uruchomienie: 
 
 Aby wypisać tylko katalogi ze zmiennej PATH:
-``` bash python path_var.py ```
+``` python scripts/path_var.py ```
 Aby dla każdego katalogu wypisać również listę plików wykonywalnych:
-``` bash python path_var.py -e ```
+``` python scripts/path_var.py -e ```
 
 
 3. Napisz własną, uproszczoną wersję uniksowego programu tail, który będzie wypisywał
@@ -38,12 +38,12 @@ wypisać 10 ostatnich linii.
         ii. w przypadku, gdy plik ma mniej linii, należy wypisać całą zawartość pliku.
     b. móc być wywołany:
         i. przekazując mu danych na wejście standardowe, np.
-``` bash cat plik.txt | python tail.py ```
+``` cat plik.txt | python scripts/tail.py ```
         ii. z argumentem określającym ścieżkę pliku, który ma być wypisany np.
-``` bash python tail.py plik.txt ```
+``` python scripts/tail.py plik.txt ```
         iii. w przypadku wywołania łączącego te dwa sposoby, np.
-``` bash cat plik.py | python tail.py plik.txt ```
+``` cat plik.py | python scripts/.py plik.txt ```
 program powinien zignorować dane z wejścia standardowego i wyświetlić
 dane z pliku.
 
-Przykładowe uruchomienie: ``` bash  python tail.py --lines=5 test.txt ``` or ``` bash cat test.txt | python tail.py ```
+Przykładowe uruchomienie: ```  python scripts/tail.py --lines=5 test.txt ``` or ``` cat test.txt | python scripts/tail.py ```

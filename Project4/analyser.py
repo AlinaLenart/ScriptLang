@@ -1,18 +1,17 @@
+#!/usr/bin/env python3
 import sys
 import json
 import collections
 
 def analyze_file(file_path):
     """
-    Analizuje zawartość pliku i zwraca słownik ze statystykami:
+    Analizuje zawartość pliku tekstowego i zwraca słownik zawierający:
       - file_path: ścieżka do pliku,
       - total_characters: całkowita liczba znaków,
       - total_words: całkowita liczba słów,
       - total_lines: liczba wierszy,
-      - most_frequent_character: znak występujący najczęściej wraz z liczbą wystąpień,
-      - most_frequent_word: słowo występujące najczęściej wraz z liczbą wystąpień,
-      - char_counts: szczegółowy licznik znaków,
-      - word_counts: szczegółowy licznik słów.
+      - most_frequent_character: znak występujący najczęściej,
+      - most_frequent_word: słowo występujące najczęściej.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -27,10 +26,10 @@ def analyze_file(file_path):
     total_lines = len(lines)
 
     char_counter = collections.Counter(content)
-    most_common_char, most_common_char_count = char_counter.most_common(1)[0] if char_counter else (None, 0)
+    most_common_char, _ = char_counter.most_common(1)[0] if char_counter else (None, 0)
 
     word_counter = collections.Counter(word.lower() for word in words)
-    most_common_word, most_common_word_count = word_counter.most_common(1)[0] if word_counter else (None, 0)
+    most_common_word, _ = word_counter.most_common(1)[0] if word_counter else (None, 0)
 
     result = {
         "file_path": file_path,
@@ -38,21 +37,16 @@ def analyze_file(file_path):
         "total_words": total_words,
         "total_lines": total_lines,
         "most_frequent_character": most_common_char,
-        "most_frequent_character_count": most_common_char_count,
-        "most_frequent_word": most_common_word,
-        "most_frequent_word_count": most_common_word_count,
-        "char_counts": dict(char_counter),
-        "word_counts": dict(word_counter)
+        "most_frequent_word": most_common_word
     }
     return result
 
 def main():
-    # Czytamy sciezke do pliku ze standardowego wejscia
+    # Odczytujemy ścieżkę do pliku ze standardowego wejścia.
     file_path = sys.stdin.read().strip()
     if not file_path:
         sys.exit("Nie podano ścieżki do pliku.")
     analysis = analyze_file(file_path)
-    # Wypisujemy wynik w formacie JSON
     print(json.dumps(analysis, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
