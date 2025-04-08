@@ -1,36 +1,33 @@
-#!/usr/bin/env python3
 import sys
 import json
 import collections
 
+# analyzes a text file and returns: file path, total characters, words, lines and most frequent character, word
 def analyze_file(file_path):
-    """
-    Analizuje zawartość pliku tekstowego i zwraca słownik zawierający:
-      - file_path: ścieżka do pliku,
-      - total_characters: całkowita liczba znaków,
-      - total_words: całkowita liczba słów,
-      - total_lines: liczba wierszy,
-      - most_frequent_character: znak występujący najczęściej,
-      - most_frequent_word: słowo występujące najczęściej.
-    """
     try:
+        #try to open and read the file content
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
-        sys.exit(f"Błąd podczas odczytu pliku '{file_path}': {e}")
+        sys.exit(f"Error readingf file '{file_path}': {e}")
 
     total_characters = len(content)
+
+     #split into words and count them
     words = content.split()
     total_words = len(words)
+
     lines = content.splitlines()
     total_lines = len(lines)
 
     char_counter = collections.Counter(content)
     most_common_char, _ = char_counter.most_common(1)[0] if char_counter else (None, 0)
 
+    #count word frequencies, case-insensitive
     word_counter = collections.Counter(word.lower() for word in words)
     most_common_word, _ = word_counter.most_common(1)[0] if word_counter else (None, 0)
 
+    # build result dictionary
     result = {
         "file_path": file_path,
         "total_characters": total_characters,
@@ -42,10 +39,9 @@ def analyze_file(file_path):
     return result
 
 def main():
-    # Odczytujemy ścieżkę do pliku ze standardowego wejścia.
     file_path = sys.stdin.read().strip()
     if not file_path:
-        sys.exit("Nie podano ścieżki do pliku.")
+        sys.exit("No file path given")
     analysis = analyze_file(file_path)
     print(json.dumps(analysis, indent=2, ensure_ascii=False))
 

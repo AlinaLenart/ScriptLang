@@ -1,11 +1,8 @@
 import os
 import sys
 
+# displays environmental variables, if filters in input then find everything connected
 def display_env_vars(filters = None):
-    """
-    Wyświetla zmienne środowiskowe.
-    Jeśli podano listę filtrów, wyświetla tylko te zmienne, których nazwa zawiera którykolwiek z elementów listy.
-    """
     env_vars = os.environ
     if filters:
         filtered_vars = {
@@ -19,7 +16,7 @@ def display_env_vars(filters = None):
         print(f"{var} = {filtered_vars[var]}")
 
 def main():
-     # Pobieramy argumenty z linii poleceń (bez nazwy skryptu)
+    # form input line
     filters = sys.argv[1:] if len(sys.argv) > 1 else None
     display_env_vars(filters)
 

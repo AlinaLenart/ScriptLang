@@ -47,3 +47,34 @@ program powinien zignorować dane z wejścia standardowego i wyświetlić
 dane z pliku.
 
 Przykładowe uruchomienie: ```  python scripts/tail.py --lines=5 test.txt ``` or ``` cat test.txt | python scripts/tail.py ```
+
+
+4. Napisz program w ulubionym języku programowania (dowolnym np. C, C++, Rust, Go,
+Java, Python, PHP, …), który:
+    a. czyta z wejścia standardowego ścieżkę do pliku tekstowego
+    b. analizuje plik tekstowy pod kątem statystycznym, a następnie dla oblicza
+następujące informacje:
+        i. ścieżka do pliku,
+        ii. całkowita liczba znaków,
+        iii. całkowita liczba słów,
+        iv. liczba wierszy,
+        v. znak występujący najczęściej,
+        vi. słowo występujące najczęściej.
+    c. wynik obliczeń wypisywany jest na wyjście standardowe powinien w formacie *.tsv, *.csv, lub *.json
+    d. Następnie, napisz skrypt w języku Python, który:
+        i. przyjmuje jako argument linii komend ścieżkę do katalogu w systemie
+plików,
+        ii. z wykorzystaniem modułu subprocess uruchamia napisany powyżej
+program do obliczeń, przesyłając na wejście standardowe ścieżki do
+kolejnych plików,
+        iii. przetwarza dane wyjściowe kolejnych wywołań programu, zapisując
+wynik jako listę słowników,
+        iv. wypisuje na wyjście standardowe w dowolnym formacie:
+            ● liczbę przeczytanych plików, sumaryczną liczbę znaków,
+sumaryczną liczbę słów, sumaryczną liczbę wierszy, znak
+występujący najczęściej, słowo występujące najczęściej.
+
+Przykładowe uruchomienie: ```  python main.py files ``` or ``` echo "files\test1.txt" | python analyze_file.py ```
+
+
+5. ``` python mediaconvert.py . --format webm ``` or ``` python mediaconvert.py . --format mp3 ```
