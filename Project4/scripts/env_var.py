@@ -6,8 +6,9 @@ def display_env_vars(filters = None):
     env_vars = os.environ
     if filters:
         filtered_vars = {
-            name: value for name, value in env_vars.items()
-            if any(f in name for f in filters)
+            name: value 
+            for name, value in env_vars.items()
+            if any(f.upper() in name for f in filters)
         }
     else:
         filtered_vars = env_vars

@@ -11,7 +11,7 @@ def parse_arguments():
             try:
                 lines_to_print = int(arg.split('=', 1)[1])
             except ValueError:
-                print("Invalid --lines. Default is 10.", file=sys.stderr)
+                print("Invalid --lines. Default is 10", file=sys.stderr)
                 lines_to_print = 10
         elif not arg.startswith('-'):
             file_path = arg

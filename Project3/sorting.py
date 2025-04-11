@@ -23,7 +23,6 @@ def sort_log(log: list, index: int) -> list:
 
 
 
-
 if __name__ == "__main__":
     log = read_log()
     sorted_log = sort_log(log, 1)
