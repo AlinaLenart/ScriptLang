@@ -1,0 +1,85 @@
+{
+    "DsBialka": {
+      "info": {
+        "Nr": "1",
+        "Kod stacji": "DsBialka",
+        "Kod międzynarodowy": "",
+        "Nazwa stacji": "Białka",
+        "Stary Kod stacji (o ile inny od aktualnego)": "",
+        "Data uruchomienia": "1990-01-03",
+        "Data zamknięcia": "2005-12-31",
+        "Typ stacji": "przemysłowa",
+        "Typ obszaru": "podmiejski",
+        "Rodzaj stacji": "kontenerowa stacjonarna",
+        "Województwo": "DOLNOŚLĄSKIE",
+        "Miejscowość": "Białka",
+        "Adres": "",
+        "WGS84 φ N": "51.197783",
+        "WGS84 λ E": "16.117390"
+      },
+      "measurements": []
+    },
+    "DsCzar07": {
+      "info": {
+        "Nr": "9",
+        "Kod stacji": "DsCzar07",
+        "Kod międzynarodowy": "PL0186A",
+        "Nazwa stacji": "Czarna Góra",
+        "Stary Kod stacji (o ile inny od aktualnego)": "",
+        "Data uruchomienia": "1996-12-01",
+        "Data zamknięcia": "2008-09-30",
+        "Typ stacji": "tło",
+        "Typ obszaru": "pozamiejski",
+        "Rodzaj stacji": "kontenerowa stacjonarna",
+        "Województwo": "DOLNOŚLĄSKIE",
+        "Miejscowość": "Czarna Góra",
+        "Adres": "",
+        "WGS84 φ N": "50.255072",
+        "WGS84 λ E": "16.801641"
+      },
+      "measurements": []
+    },
+    "DsCzerStraza": {
+      "info": {
+        "Nr": "10",
+        "Kod stacji": "DsCzerStraza",
+        "Kod międzynarodowy": "PL0028A",
+        "Nazwa stacji": "Czerniawa",
+        "Stary Kod stacji (o ile inny od aktualnego)": "DsCzer02",
+        "Data uruchomienia": "1996-07-01",
+        "Data zamknięcia": "",
+        "Typ stacji": "tło",
+        "Typ obszaru": "pozamiejski",
+        "Rodzaj stacji": "kontenerowa stacjonarna",
+        "Województwo": "DOLNOŚLĄSKIE",
+        "Miejscowość": "Czerniawa",
+        "Adres": "ul. Strażacka 7",
+        "WGS84 φ N": "50.912475",
+        "WGS84 λ E": "15.312190"
+      },
+      "measurements": [
+        {
+          "rok": 2023,
+          "wielkosc": "NOx",
+          "czestotliwosc": "1g",
+          "pomiary": [
+            { "nr": "01/01/23 01:00", "wartosc": 2.09576 },
+            { "nr": "01/01/23 02:00", "wartosc": 1.62573 },
+            { "nr": "01/01/23 03:00", "wartosc": 1.66534 },
+            { "nr": "01/01/23 04:00", "wartosc": 2.14918 },
+            { "nr": "01/01/23 05:00", "wartosc": 1.78059 },
+            { "nr": "01/01/23 06:00", "wartosc": 1.36473 },
+            { "nr": "01/01/23 07:00", "wartosc": 0.99879 },
+            { "nr": "01/01/23 08:00", "wartosc": 1.03916 },
+            { "nr": "01/01/23 09:00", "wartosc": 2.01959 },
+            { "nr": "01/01/23 10:00", "wartosc": 2.32285 },
+            { "nr": "01/01/23 11:00", "wartosc": 2.93788 },
+            { "nr": "01/01/23 12:00", "wartosc": 2.97877 },
+            { "nr": "01/01/23 13:00", "wartosc": 3.19918 },
+            { "nr": "01/01/23 14:00", "wartosc": 3.20981 }
+          ]
+        }
+      ]
+    }
+  }
+  
