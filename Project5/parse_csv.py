@@ -2,25 +2,28 @@ import csv
 import os
 import re
 import json
-from collections import defaultdict
 
+# returns dict of station codes, with dict value: info dict, measurements list
 def load_stations(path):
     stations = {}
+
     with open(path, newline='', encoding='utf-8') as f:
+        # reads file and returns every line as dict
         reader = csv.DictReader(f)
         for row in reader:
-            kod_stacji = row["Kod stacji"].strip()
-            stations[kod_stacji] = {
+            station_code = row["Kod stacji"]
+            stations[station_code] = {
                 "info": row,
-                "measurements": []  # będzie listą grup pomiarowych
+                # future list of measurements group
+                "measurements": []  
             }
     return stations
 
 def parse_filename(filename):
     match = re.match(r"(\d{4})_(.+?)_(.+?)\.csv", filename)
     if match:
-        rok, wielkosc, czestotliwosc = match.groups()
-        return int(rok), wielkosc, czestotliwosc
+        year, compound, frequency = match.groups()
+        return int(year), compound, frequency
     return None
 
 def load_measurements_grouped(stations, measurements_dir):
