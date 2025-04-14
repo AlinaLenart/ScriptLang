@@ -18,6 +18,6 @@ Zadanie 4
     
 
 Zadanie 5 
-    default: python 5argparse.py PM10 24g 2023-01-01 2023-03-31
-    random subcommand: python 5_subcommands.py losowa --c NO2 --f 24g --s 2023-01-01 --e 2023-01-02
-    stats subcommand: python 5_subcommands.py statystyki DsGlogWiStwo PM10 24g 2023-01-01 2023-01-11
+    default: python 5_subcommands.py PM10 24g 2023-01-01 2023-03-31
+    random subcommand (w tym przykladzie sa 3 stacje spelniajace kryteria): python 5_subcommands.py rand NO2 24g 2023-01-01 2023-01-02
+    stats subcommand: python 5_subcommands.py stats DsGlogWiStwo PM10 24g 2023-01-01 2023-01-11
