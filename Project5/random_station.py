@@ -23,7 +23,7 @@ def find_random_station(wielkosc: str, czestotliwosc: str, poczatek: str, koniec
     
     # Wybierz losową stację
     random_station_code = random.choice(station_codes)
-    print(f"Wybrano stację o kodzie: {random_station_code}")
+    # print(f"Wybrano stację o kodzie: {random_station_code}")
     
     # Znajdź metadane stacji
     return get_station_metadata(random_station_code, stations_file)
@@ -101,3 +101,51 @@ def get_station_metadata(station_code: str, stations_file: Path) -> tuple:
     
     print(f"Nie znaleziono metadanych dla stacji: {station_code}")
     return None, None
+
+def get_station_measurements(measurement_file: Path, station_code: str, 
+                           start_date: str, end_date: str) -> list[float]:
+    """
+    Zwraca listę pomiarów dla danej stacji w zadanym przedziale czasowym.
+    """
+    measurements = []
+    station_index = None
+    
+    with open(measurement_file, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        
+        # Znajdź indeks kolumny dla danej stacji
+        headers = next(reader)
+        for _ in range(4):  # Pomijamy kolejne 4 wiersze
+            next(reader)
+        
+        # Wiersz z kodami stacji
+        station_codes_row = next(reader)
+        for i, code in enumerate(station_codes_row[1:]):  # Pomijamy pierwszą kolumnę (datę)
+            if code.startswith(f"{station_code}-"):
+                station_index = i + 1  # +1 bo pomijamy pierwszą kolumnę
+                break
+                
+        if station_index is None:
+            print(f"Nie znaleziono stacji {station_code} w pliku {measurement_file}")
+            return []
+        
+        # Przetwarzaj dane
+        for row in reader:
+            if not row:
+                continue
+                
+            try:
+                date_str = row[0].strip()
+                if not date_str:
+                    continue
+                    
+                # Sprawdź czy data mieści się w zakresie
+                if start_date <= date_str <= end_date:
+                    value = row[station_index].strip()
+                    if value:  # Jeśli wartość nie jest pusta
+                        measurements.append(float(value.replace(',', '.')))  # Obsługa formatu polskiego
+            except (ValueError, IndexError) as e:
+                print(f"Błąd przetwarzania wiersza: {e}")
+                continue
+    
+    return measurements
