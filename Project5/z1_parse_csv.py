@@ -20,7 +20,7 @@ def load_stations(path):
     return stations
 
 # parses filename to extract: year compound and frequency
-def parse_filename(filename):
+def parse_filename(filename) -> tuple:
     # regex: <year>_<measurement>_<frequency>.csv  
     # ^ beginning of line, (\d{4}) precisely 4 digits, (.+?) any char at least one, match non-greedy (lazy, match as few char as possible if matching overall pattern) 
     match = re.match(r"(\d{4})_(.+?)_(.+?)\.csv", filename)
@@ -31,30 +31,36 @@ def parse_filename(filename):
 
 # loads measurements from csv files, groups them by year, compound and frequency
 # and adds them to the corresponding station in the stations dict
-def load_measurements_grouped(stations, measurements_dir):
+def load_measurements_grouped(stations, measurements_dir) -> dict:
+
+    # iterate over all files in the measurements directory
     for fname in os.listdir(measurements_dir):
         if not fname.endswith('.csv'):
             continue
+        # try to separate year, compound and frequency from filename
         parsed = parse_filename(fname)
         if not parsed:
             continue
 
         year, compound, frequency = parsed
+
+        # open file and read its content as list of lines
         path = os.path.join(measurements_dir, fname)
-
-
         with open(path, newline='', encoding='utf-8') as f:
             lines = list(csv.reader(f))
-            if len(lines) < 4:
+            # check if file has at least 6 lines (measurements header)
+            if len(lines) < 6:
                 continue
-
+            # read station codes from the second line (skip first elem - title)
             station_codes = lines[1][1:]
-            for row in lines[3:]:
+            # read each measurement row
+            for row in lines[6:]:
                 if not row or len(row) < 2:
                     continue
                 nr = row[0]
                 values = row[1:]
 
+            
                 for i, val in enumerate(values):
                     station_code = station_codes[i].strip()
                     if station_code not in stations or val.strip() == "":
