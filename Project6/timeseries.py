@@ -38,7 +38,18 @@ class TimeSeries:
 
             else:
                 raise TypeError("Key must be int, slice, datetime or date")
-            
+
+        @property
+        def mean(self):
+            if np.isnan(self.values).all():
+                return None
+            return float(np.nanmean(self.values))
+
+        @property
+        def stddev(self):
+            if np.isnan(self.values).all():
+                return None
+            return float(np.nanstd(self.values))    
 
         def __str__(self):
             return f"TimeSeries<{self.indicator}> for {self.station_code}, {len(self.values)} points"
