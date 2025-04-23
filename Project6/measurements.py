@@ -1,9 +1,8 @@
 import os
 import pandas as pd
-from datetime import datetime
 import numpy as np
 from timeseries import TimeSeries
-
+from SeriesValidators.series_validator import OutlierDetector, ZeroSpikeDetector, ThresholdDetector
 
 # aggregates multiple .csv files representing timeseries for a single compund/freq
 class Measurements:
@@ -57,6 +56,7 @@ class Measurements:
         path = os.path.join(self.folder_path, filename)
         df = pd.read_csv(path, skiprows=6)
         meta = pd.read_csv(path, nrows=6, header=None)
+
         # station code, compound, averaging time, unit
         stations = meta.iloc[1, 1:]
         compounds = meta.iloc[2, 1:]
@@ -82,6 +82,30 @@ class Measurements:
         return self._timeseries_cache
 
 
+    def detect_all_anomalies(self, validators: list, preload: bool = False):
+        """
+        Analyze all loaded TimeSeries using provided validators.
+
+        :param validators: list of SeriesValidator instances
+        :param preload: if True, preload all data from files
+        :return: dict mapping keys to lists of anomaly messages
+        """
+        if preload:
+            self._load_all()
+
+        result = {}
+
+        for key, series in self._timeseries_cache.items():
+            messages = []
+            for validator in validators:
+                messages.extend(validator.analyze(series))
+            if messages:
+                result[key] = messages
+
+        return result
+
+
+
 if __name__ == "__main__":
     folder = "measurements"
     m = Measurements(folder)
@@ -105,3 +129,20 @@ if __name__ == "__main__":
     if series:
         example = series[0]
         print(f"{example.station_code} ({example.compound}): {len(example.timestamps)} timestamps, unit = {example.unit}")
+
+    folder = "measurements"
+    m = Measurements(folder)
+
+    validators = [
+        OutlierDetector(k=3),
+        ZeroSpikeDetector(),
+        ThresholdDetector(threshold=200)
+    ]
+
+    anomalies = m.detect_all_anomalies(validators, preload=True)
+
+    for key, messages in anomalies.items():
+        print(f"\n[{key}]")
+        for msg in messages:
+            print(" -", msg)
+

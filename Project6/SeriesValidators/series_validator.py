@@ -5,7 +5,7 @@ class SeriesValidator(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     # returns a list of messages about detected anomalies or an empty list
     def analyze(self, series) -> list:
-        """Zwraca listę komunikatów o wykrytych anomaliach lub pustą listę."""
+        # if not implemented pass
         pass
 
 # this class checks outliers in data, outlier means any value that is more than k standard deviations away from the mean
