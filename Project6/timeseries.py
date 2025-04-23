@@ -6,7 +6,9 @@ class TimeSeries:
         self.compound = compound
         self.station_code = station_code
         self.averaging_time = averaging_time
-        self.timestamps = timestamps
+        # list of datetime objects
+        self.timestamps = timestamps 
+        # list of float values
         self.values = np.array(values, dtype=float)
         self.unit = unit
         

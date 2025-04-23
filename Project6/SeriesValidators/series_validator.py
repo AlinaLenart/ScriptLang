@@ -67,7 +67,40 @@ class ThresholdDetector(SeriesValidator):
             if not np.isnan(val) and val > self.threshold:
                 messages.append(f"Threshold exceeded at {ts}: value {val} > {self.threshold}")
         return messages
-    
+
+
+# combines multiple validators into a single one using OR or AND logic
+class CompositeValidator(SeriesValidator):
+    def __init__(self, validators, mode):
+        if mode not in ('OR', 'AND'):
+            raise ValueError("mode must be 'OR' or 'AND'")
+        self.validators = validators
+        self.mode = mode
+
+    def analyze(self, series) -> list:
+        all_messages = []
+        all_results = []
+
+        for validator in self.validators:
+            result = validator.analyze(series)
+            all_results.append(result)
+            all_messages.extend(result)
+
+        if self.mode == 'OR':
+            if any(all_results):
+                # avoiding duplicates
+                return list(set(all_messages))  
+            else:
+                return []
+
+        elif self.mode == 'AND':
+            if all(all_results):
+                return list(set(all_messages))
+            else:
+                return []
+
+
+
 
 def report_anomalies(series, validator, print_output = True, target_list = None):
     """
