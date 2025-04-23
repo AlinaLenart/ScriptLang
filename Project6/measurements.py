@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 from timeseries import TimeSeries
-from SeriesValidators.series_validator import OutlierDetector, ZeroSpikeDetector, ThresholdDetector
+import SeriesValidators
 
 # aggregates multiple .csv files representing timeseries for a single compund/freq
 class Measurements:
@@ -64,8 +64,13 @@ class Measurements:
         units = meta.iloc[4, 1:]
 
         # first column = timestamp, parse timestamps with a fixed format to avoid warnings
-        timestamps = pd.to_datetime(df.iloc[:, 0], format="%d/%m/%y %H:%M", errors="coerce")
-        
+        # format: "m/d/yy H:M"
+        timestamps = pd.to_datetime(df.iloc[:, 0], format="%m/%d/%y %H:%M", errors="coerce")
+        invalid = df.iloc[:, 0][timestamps.isna()]
+        if not invalid.empty:
+            print(f"\n⚠️ Invalid timestamps found in file {filename}:")
+            print(invalid.head(10))  # możesz też dać .tolist() albo bez .head() jeśli chcesz wszystkie
+
         for idx, col in enumerate(df.columns[1:]):
             values = pd.to_numeric(df[col], errors='coerce').tolist()
             ts = TimeSeries(
@@ -104,9 +109,7 @@ class Measurements:
 
         return result
 
-
-
-if __name__ == "__main__":
+def test():
     folder = "measurements"
     m = Measurements(folder)
 
@@ -130,19 +133,7 @@ if __name__ == "__main__":
         example = series[0]
         print(f"{example.station_code} ({example.compound}): {len(example.timestamps)} timestamps, unit = {example.unit}")
 
-    folder = "measurements"
-    m = Measurements(folder)
 
-    validators = [
-        OutlierDetector(k=3),
-        ZeroSpikeDetector(),
-        ThresholdDetector(threshold=200)
-    ]
-
-    anomalies = m.detect_all_anomalies(validators, preload=True)
-
-    for key, messages in anomalies.items():
-        print(f"\n[{key}]")
-        for msg in messages:
-            print(" -", msg)
+if __name__ == "__main__":
+    test()
 

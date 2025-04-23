@@ -1,0 +1,100 @@
+--- Anomaly Report ---
+
+[NOx-DsWrocAlWisn-1g]
+ - Threshold exceeded at 2023-01-20 09:00:00: value 710.863 > 700
+ - Threshold exceeded at 2023-02-16 08:00:00: value 724.004 > 700
+ - Threshold exceeded at 2023-03-01 08:00:00: value 757.282 > 700
+ - Threshold exceeded at 2023-03-01 09:00:00: value 736.358 > 700
+ - Threshold exceeded at 2023-03-01 10:00:00: value 701.123 > 700
+ - Threshold exceeded at 2023-03-02 07:00:00: value 779.078 > 700
+ - Threshold exceeded at 2023-12-19 07:00:00: value 762.883 > 700
+ - Threshold exceeded at 2023-12-19 08:00:00: value 924.647 > 700
+ - Threshold exceeded at 2023-12-19 09:00:00: value 881.639 > 700
+
+[NOx-KpWloclOkrze-1g]
+ - Threshold exceeded at 2023-02-28 08:00:00: value 768.7 > 700
+
+[NOx-LdLodzJanPaw-1g]
+ - Threshold exceeded at 2023-09-07 07:00:00: value 742.9 > 700
+
+[NOx-MpKrakAlKras-1g]
+ - Threshold exceeded at 2023-03-10 08:00:00: value 719.272 > 700
+ - Threshold exceeded at 2023-11-30 05:00:00: value 731.713 > 700
+
+[NOx-MpKrakBulwar-1g]
+ - Threshold exceeded at 2023-01-02 05:00:00: value 764.657 > 700
+ - Threshold exceeded at 2023-01-02 06:00:00: value 811.89 > 700
+
+[NOx-MzWarAlNiepo-1g]
+ - Threshold exceeded at 2023-03-10 07:00:00: value 701.4 > 700
+ - Threshold exceeded at 2023-03-10 08:00:00: value 955.6 > 700
+ - Threshold exceeded at 2023-03-19 08:00:00: value 748.7 > 700
+
+[NOx-SlCzestoArmK-1g]
+ - Threshold exceeded at 2023-02-15 06:00:00: value 749.161 > 700
+ - Threshold exceeded at 2023-03-01 08:00:00: value 719.422 > 700
+ - Threshold exceeded at 2023-03-01 10:00:00: value 714.768 > 700
+
+[C6H6-MpKrakAlKras-1g]
+ - Outlier at 2023-03-03 01:00:00: value 30.1936 deviates more than 30 stddevs from mean 0.97
+
+[C6H6-MpKrakBulwar-1g]
+ - Outlier at 2023-12-04 07:00:00: value 28.797 deviates more than 30 stddevs from mean 0.88
+
+[NO-DsOsieczow21-1g]
+ - Outlier at 2023-10-05 05:00:00: value 31.6797 deviates more than 30 stddevs from mean 0.64
+
+[NO-KpInowSolank-1g]
+ - Outlier at 2023-11-27 10:00:00: value 76.1 deviates more than 30 stddevs from mean 0.99
+ - Outlier at 2023-11-27 11:00:00: value 77.3 deviates more than 30 stddevs from mean 0.99
+
+[NO-MzBelsIGFPAN-1g]
+ - Outlier at 2023-01-24 03:00:00: value 45.8 deviates more than 30 stddevs from mean 0.60
+ - Outlier at 2023-01-24 04:00:00: value 54.9 deviates more than 30 stddevs from mean 0.60
+ - Outlier at 2023-01-24 05:00:00: value 41.6 deviates more than 30 stddevs from mean 0.60
+
+[NO-MzPlocMiReja-1g]
+ - Outlier at 2023-11-30 08:00:00: value 225.2 deviates more than 30 stddevs from mean 2.74
+
+[NO-MzRadTochter-1g]
+ - Outlier at 2023-10-21 10:00:00: value 422.6 deviates more than 30 stddevs from mean 4.72
+
+[NO-PkNiskoSzkla-1g]
+ - Outlier at 2023-12-06 08:00:00: value 146.811 deviates more than 30 stddevs from mean 2.41
+
+[NO-PmGdyPorebsk-1g]
+ - Outlier at 2023-04-06 02:00:00: value 208.694 deviates more than 30 stddevs from mean 2.42
+
+[NO-WmElkStadion-1g]
+ - Outlier at 2023-01-10 09:00:00: value 127.019 deviates more than 30 stddevs from mean 1.75
+
+[NO-WmOlsPuszkin-1g]
+ - Outlier at 2023-10-24 08:00:00: value 215.18 deviates more than 30 stddevs from mean 2.25
+
+[NO-ZpKoszChopin-1g]
+ - Outlier at 2023-02-27 09:00:00: value 102.962 deviates more than 30 stddevs from mean 1.18
+
+[SO2-DsLegAlRzecz-1g]
+ - Outlier at 2023-02-01 08:00:00: value 242.388 deviates more than 30 stddevs from mean 5.14
+ - Outlier at 2023-11-08 05:00:00: value 221.803 deviates more than 30 stddevs from mean 5.14
+
+[SO2-MzBialaKmiciMOB-1g]
+ - Outlier at 2023-11-16 04:00:00: value 368.977558 deviates more than 30 stddevs from mean 5.02
+ - Outlier at 2023-11-16 05:00:00: value 330.538435 deviates more than 30 stddevs from mean 5.02
+
+[SO2-MzPlocKroJad-1g]
+ - Outlier at 2023-11-15 05:00:00: value 146.15 deviates more than 30 stddevs from mean 3.42
+
+[SO2-PmGdaLeczkow-1g]
+ - Outlier at 2023-06-05 09:00:00: value 57.1211 deviates more than 30 stddevs from mean 2.56
+
+[SO2-PmMalMickiew-1g]
+ - Outlier at 2023-09-11 11:00:00: value 63.9185 deviates more than 30 stddevs from mean 2.39
+
+[SO2-ZpSzczPilsud-1g]
+ - Outlier at 2023-01-18 03:00:00: value 776.702 deviates more than 30 stddevs from mean 5.81
+ - Outlier at 2023-01-18 06:00:00: value 986.927 deviates more than 30 stddevs from mean 5.81
+ - Outlier at 2023-01-18 07:00:00: value 889.44 deviates more than 30 stddevs from mean 5.81
+ - Threshold exceeded at 2023-01-18 03:00:00: value 776.702 > 700
+ - Threshold exceeded at 2023-01-18 06:00:00: value 986.927 > 700
+ - Threshold exceeded at 2023-01-18 07:00:00: value 889.44 > 700

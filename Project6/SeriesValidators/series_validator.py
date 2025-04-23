@@ -99,18 +99,15 @@ class CompositeValidator(SeriesValidator):
             else:
                 return []
 
+# this classdoesnt inherit from SeriesValidator
+# is used to demonstrate duck typing (structural polymorphism)
+class SimpleReporter:
+    def analyze(self, series):
+        return [f"Info: {series.compound} at {series.station_code} has mean = {series.mean:.2f}"]
 
 
-
+# analyzes a series using the given validator and either prints or collects messages
 def report_anomalies(series, validator, print_output = True, target_list = None):
-    """
-    Analyze a series using the given validator and either print or collect messages.
-
-    :param series: TimeSeries object to analyze
-    :param validator: a SeriesValidator (e.g. OutlierDetector)
-    :param print_output: if True, prints messages to stdout
-    :param target_list: if provided, appends messages to this list instead of printing
-    """
     messages = validator.analyze(series)
 
     if print_output:
