@@ -88,13 +88,7 @@ class Measurements:
 
 
     def detect_all_anomalies(self, validators: list, preload: bool = False):
-        """
-        Analyze all loaded TimeSeries using provided validators.
-
-        :param validators: list of SeriesValidator instances
-        :param preload: if True, preload all data from files
-        :return: dict mapping keys to lists of anomaly messages
-        """
+        
         if preload:
             self._load_all()
 
