@@ -1,0 +1,5 @@
+2025-05-06 16:24:36,031	DEBUG	Function call add with args=(7, 8), kwargs={}
+2025-05-06 16:24:36,031	DEBUG	Function add returned 15 (time: 0.000081s)
+2025-05-06 16:24:36,031	DEBUG	Function call add with args=(), kwargs={'x': 7, 'y': 8}
+2025-05-06 16:24:36,031	DEBUG	Function add returned 15 (time: 0.000025s)
+2025-05-06 16:24:36,031	INFO	Created object of class Station with args=('WAW3424_Mob', 'Warszawa ul. Mokotowska 13'), kwargs={}
