@@ -1,6 +1,6 @@
 from functools import reduce
-from collections import defaultdict
-from collections.abc import Iterable
+# from collections import defaultdict
+# from collections.abc import Iterable
 
 # create an acronym (skrotowiec) from the first letters of each word '(uppercased)
 def acronym(words):
@@ -18,7 +18,7 @@ def median(list):
         else (sorted_list[n // 2 - 1] + sorted_list[n // 2]) / 2
     )
 
-# calculate esquare root using Newtons method, epsilon is the precision
+# calculate esquare root using newtons method, epsilon is the precision
 def pierwiastek(x, epsilon):
     """y=x/2  # initial guess
     while abs(y*y-x)>= epsilon:

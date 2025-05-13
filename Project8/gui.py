@@ -108,7 +108,7 @@ class LogViewerWindow(QMainWindow):
         self.log_list.clear()
         for entry in log_list or self.logs:
             short = f"{entry[0]} {entry[6]} {entry[8]}"
-            display = short[:30] + "..." if len(short) > 30 else short
+            display = short[:50] + "..." if len(short) > 50 else short
             self.log_list.addItem(display)
             self.log_list.itemClicked.connect(self.show_log_details)
 
