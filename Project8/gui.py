@@ -3,64 +3,92 @@ from datetime import datetime, timezone
 
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QListWidget, QVBoxLayout,
-    QWidget, QFileDialog, QMessageBox, QLineEdit, QLabel, QHBoxLayout
+    QWidget, QFileDialog, QMessageBox, QLineEdit, QLabel, QHBoxLayout, QDateTimeEdit
 )
+
+from PySide6.QtWidgets import (
+    QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QFormLayout
+)
+
+from PySide6.QtCore import QDateTime
 from reader import read_log 
-from detail import LogDetailWindow
+from detail import LogDetailPanel
 
 
 
 class LogViewerWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Przeglądarka logów HTTP (PySide6)")
-        self.resize(800, 600)
+        self.setWindowTitle("HTTP Logs Viewer")
+        self.resize(1000, 700)
 
-        self.logs = []       # aktualnie wyświetlane logi
-        self.all_logs = []   # pełny zbiór logów, niezmieniony
+        # currently shown logs
+        self.logs = []       
+        # all logs loaded from file, not modified
+        self.all_logs = []   
 
-        # Widżety główne
-        self.load_button = QPushButton("Wczytaj plik z logami")
+        
+        self.load_button = QPushButton("Load log file")
         self.log_list = QListWidget()
 
-        # Widżety filtrów
-        self.from_date_input = QLineEdit()
-        self.from_date_input.setPlaceholderText("Od (YYYY-MM-DD HH:MM)")
+        
+        self.from_date_input = QDateTimeEdit()
+        self.from_date_input.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
+        self.from_date_input.setCalendarPopup(True)
+        self.from_date_input.setDateTime(QDateTime.currentDateTime())
 
-        self.to_date_input = QLineEdit()
-        self.to_date_input.setPlaceholderText("Do (YYYY-MM-DD HH:MM)")
+        self.to_date_input = QDateTimeEdit()
+        self.to_date_input.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
+        self.to_date_input.setCalendarPopup(True)
+        self.to_date_input.setDateTime(QDateTime.currentDateTime())
 
-        self.filter_button = QPushButton("Filtruj")
-        self.reset_button = QPushButton("Resetuj filtry")
 
-        # Układ główny
-        layout = QVBoxLayout()
-        layout.addWidget(self.load_button)
+        self.filter_button = QPushButton("Filter")
+        self.reset_button = QPushButton("Reset")
+
+
+        left_layout = QVBoxLayout()
+        left_layout.addWidget(self.load_button)
 
         filter_layout = QHBoxLayout()
-        filter_layout.addWidget(QLabel("Od:"))
+        filter_layout.addWidget(QLabel("From date:"))
         filter_layout.addWidget(self.from_date_input)
-        filter_layout.addWidget(QLabel("Do:"))
+        filter_layout.addWidget(QLabel("To date:"))
         filter_layout.addWidget(self.to_date_input)
         filter_layout.addWidget(self.filter_button)
         filter_layout.addWidget(self.reset_button)
 
-        layout.addLayout(filter_layout)
-        layout.addWidget(self.log_list)
+        left_layout.addLayout(filter_layout)
+        left_layout.addWidget(self.log_list)
+
+        left_widget = QWidget()
+        left_widget.setLayout(left_layout)
+
+        # rgiht panelwith chosen log details
+        self.detail_panel = LogDetailPanel()
+        self.detail_panel.hide()
+
+        # main alyout (horizontal)
+        main_layout = QHBoxLayout()
+        main_layout.addWidget(left_widget, 2)
+        main_layout.addWidget(self.detail_panel, 1)
 
         container = QWidget()
-        container.setLayout(layout)
+        container.setLayout(main_layout)
         self.setCentralWidget(container)
 
-        # Połączenia sygnałów
+
+        # connect buttons to functions
         self.load_button.clicked.connect(self.load_logs)
         self.filter_button.clicked.connect(self.filter_logs)
         self.reset_button.clicked.connect(self.reset_filters)
+        self.log_list.itemClicked.connect(self.show_log_details)
+
 
 
     def load_logs(self):
         file_path, _ = QFileDialog.getOpenFileName(
-            self, "Wybierz plik z logami", "", "Pliki tekstowe (*.log *.txt);;Wszystkie pliki (*)"
+            self, "Choose file with logs", "", "(*.log *.txt);;(*)"
         )
 
         if not file_path:
@@ -70,9 +98,11 @@ class LogViewerWindow(QMainWindow):
             self.all_logs = read_log(file_path)
             self.logs = self.all_logs.copy()
             self.update_log_list(self.logs)
+            self.detail_panel.hide()
 
         except Exception as e:
-            QMessageBox.critical(self, "Błąd", f"Nie udało się wczytać pliku:\n{e}")
+            QMessageBox.critical(self, "Error", f"Failure during reading file:\n{e}")
+
 
     def update_log_list(self, log_list=None):
         self.log_list.clear()
@@ -93,23 +123,17 @@ class LogViewerWindow(QMainWindow):
             print(from_dt, to_dt)
 
         except ValueError:
-            QMessageBox.warning(self, "Błąd", "Niepoprawny format daty. Użyj YYYY-MM-DD HH:MM:SS.")
+            QMessageBox.warning(self, "Error", "Incorrect data format, use YYYY-MM-DD HH:MM:SS")
             return
 
         filtered = []
         for log in self.all_logs:
-            print(log)
             timestamp = log[0]
 
-            # DEBUG: pokaż szczegóły porównania
-            print(f"[DEBUG] timestamp: {timestamp} | from_dt: {from_dt} | to_dt: {to_dt}")
-
             if (from_dt and timestamp < from_dt) or (to_dt and timestamp > to_dt):
-                print(f"[DEBUG] -> ODRZUCAM: {timestamp}")
                 continue
 
-            print(f"[DEBUG] -> AKCEPTUJĘ: {timestamp}")
-            print(type(timestamp), timestamp.tzinfo)
+            #print(type(timestamp), timestamp.tzinfo)
 
             filtered.append(log)
 
@@ -122,11 +146,19 @@ class LogViewerWindow(QMainWindow):
         self.to_date_input.clear()
         self.logs = self.all_logs.copy()
         self.update_log_list(self.logs)
+        self.detail_panel.hide()
 
-    def show_log_details(self, item):
+    # show details of selected log
+    # if no log is selected hide the details panel
+    # if no logs are loaded hide the details panel
+    def show_log_details(self):
         index = self.log_list.currentRow()
-        self.detail_window = LogDetailWindow(self.logs, index)
-        self.detail_window.show()
+        if index < 0 or not self.logs:
+            self.detail_panel.hide()
+            return
+
+        self.detail_panel.load_logs(self.logs, index)
+        self.detail_panel.show()
 
 
 
